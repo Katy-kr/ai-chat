@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell:*)",
+      "Bash(export PATH=\"$PATH:/c/Program Files \\(x86\\)/Google/Cloud SDK/google-cloud-sdk/bin\")",
+      "Bash(gcloud --version)",
+      "Bash(/c/Program Files \\(x86\\)/Google/Cloud SDK/google-cloud-sdk/bin/gcloud.cmd:*)",
+      "Bash('/c/Program Files \\(x86\\)/Google/Cloud SDK/google-cloud-sdk/bin/gcloud.cmd' config set project sodium-gateway-492209-i6)",
+      "Bash('/c/Program Files \\(x86\\)/Google/Cloud SDK/google-cloud-sdk/bin/gcloud.cmd' config get-value project)",
+      "Bash($GCLOUD auth:*)",
+      "Bash($GCLOUD services:*)",
+      "Bash($GCLOUD artifacts:*)",
+      "Bash('/c/Program Files \\(x86\\)/Google/Cloud SDK/google-cloud-sdk/bin/gcloud.cmd' artifacts repositories create ai-chat --repository-format=docker --location=asia-northeast3 --project=sodium-gateway-492209-i6 --async)",
+      "Bash('/c/Program Files \\(x86\\)/Google/Cloud SDK/google-cloud-sdk/bin/gcloud.cmd' artifacts repositories list --location=asia-northeast3 --project=sodium-gateway-492209-i6)",
+      "Bash(node:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npm run:*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/)",
+      "Bash('/c/Program Files \\(x86\\)/Google/Cloud SDK/google-cloud-sdk/bin/gcloud.cmd' builds submit --tag=asia-northeast3-docker.pkg.dev/sodium-gateway-492209-i6/ai-chat/ai-chat:latest --project=sodium-gateway-492209-i6)",
+      "Bash($GCLOUD run:*)",
+      "Bash($GCLOUD projects:*)",
+      "Bash(curl:*)",
+      "Bash(gh issue:*)"
+    ]
+  }
+}
