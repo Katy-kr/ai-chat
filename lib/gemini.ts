@@ -1,8 +1,10 @@
-import Anthropic from '@anthropic-ai/sdk'
+import { GoogleGenAI } from '@google/genai'
 
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+const gemini = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY })
 
-export default anthropic
+export default gemini
+
+export const MODEL = 'gemini-2.0-flash-lite'
 
 export const SYSTEM_PROMPT = `당신은 "핏봇(FitBot)"이라는 이름의 피트니스 및 운동 전문 AI 트레이너입니다.
 

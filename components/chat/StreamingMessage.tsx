@@ -10,7 +10,7 @@ export default function StreamingMessage({ content, isStreaming = false }: Strea
     <div className="whitespace-pre-wrap text-sm leading-relaxed text-gray-800">
       {content}
       {isStreaming && (
-        <span className="ml-0.5 inline-block h-4 w-0.5 animate-pulse bg-gray-600 align-text-bottom" />
+        <span className="ml-0.5 inline-block h-4 w-0.5 animate-blink bg-gray-500 align-text-bottom" />
       )}
     </div>
   )

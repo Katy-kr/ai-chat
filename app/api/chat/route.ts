@@ -1,9 +1,20 @@
-import type { MessageParam } from '@anthropic-ai/sdk/resources'
-import anthropic, { SYSTEM_PROMPT } from '@/lib/anthropic'
+import groq, { MODEL, SYSTEM_PROMPT } from '@/lib/groq'
+
+interface Message {
+  role: 'user' | 'assistant'
+  content: string
+}
 
 export async function POST(req: Request) {
+  if (!process.env.GROQ_API_KEY) {
+    return new Response(JSON.stringify({ error: 'API 키가 설정되지 않았습니다.' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    })
+  }
+
   const body = await req.json().catch(() => null)
-  const messages: MessageParam[] = body?.messages
+  const messages: Message[] = body?.messages
 
   if (!Array.isArray(messages) || messages.length === 0) {
     return new Response(JSON.stringify({ error: '잘못된 요청입니다.' }), {
@@ -16,23 +27,25 @@ export async function POST(req: Request) {
     async start(controller) {
       const encoder = new TextEncoder()
       try {
-        const anthropicStream = anthropic.messages.stream({
-          model: 'claude-sonnet-4-6',
-          max_tokens: 2048,
-          system: SYSTEM_PROMPT,
-          messages,
+        const groqStream = await groq.chat.completions.create({
+          model: MODEL,
+          messages: [
+            { role: 'system', content: SYSTEM_PROMPT },
+            ...messages,
+          ],
+          stream: true,
         })
 
-        for await (const event of anthropicStream) {
-          if (
-            event.type === 'content_block_delta' &&
-            event.delta.type === 'text_delta'
-          ) {
-            controller.enqueue(encoder.encode(event.delta.text))
+        for await (const chunk of groqStream) {
+          const text = chunk.choices[0]?.delta?.content ?? ''
+          if (text) {
+            controller.enqueue(encoder.encode(text))
           }
         }
-      } catch {
-        controller.enqueue(encoder.encode('오류가 발생했습니다. 잠시 후 다시 시도해주세요.'))
+      } catch (err) {
+        console.error('[Groq API Error]', err)
+        const message = err instanceof Error ? err.message : '알 수 없는 오류'
+        controller.enqueue(encoder.encode(`[오류] ${message}`))
       } finally {
         controller.close()
       }

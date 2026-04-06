@@ -1,8 +1,10 @@
-import Anthropic from '@anthropic-ai/sdk'
+import Groq from 'groq-sdk'
 
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY })
 
-export default anthropic
+export default groq
+
+export const MODEL = 'llama-3.1-8b-instant'
 
 export const SYSTEM_PROMPT = `당신은 "핏봇(FitBot)"이라는 이름의 피트니스 및 운동 전문 AI 트레이너입니다.
 

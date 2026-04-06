@@ -20,7 +20,8 @@
       "Bash($GCLOUD run:*)",
       "Bash($GCLOUD projects:*)",
       "Bash(curl:*)",
-      "Bash(gh issue:*)"
+      "Bash(gh issue:*)",
+      "Bash(npm install:*)"
     ]
   }
 }
