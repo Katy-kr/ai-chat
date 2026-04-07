@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect, KeyboardEvent } from 'react'
+import Link from 'next/link'
 import StreamingMessage from '@/components/chat/StreamingMessage'
 
 interface Message {
@@ -13,6 +14,8 @@ const QUICK_SUGGESTIONS = [
   '단백질 섭취량 계산해줘',
   '홈트레이닝 추천해줘',
   '다이어트 식단 알려줘',
+  '오늘 먹은 음식 칼로리 계산해줘',
+  '체중 감량 위한 하루 칼로리는?',
 ]
 
 function BotAvatar() {
@@ -104,15 +107,23 @@ export default function ChatPage() {
             <p className="text-xs text-[#3C1E1E]/60">AI 피트니스 트레이너</p>
           </div>
         </div>
-        {messages.length > 0 && (
-          <button
-            onClick={handleReset}
-            disabled={isStreaming}
-            className="rounded-full bg-black/10 px-3 py-1 text-xs font-medium text-[#3C1E1E] hover:bg-black/20 disabled:cursor-not-allowed disabled:opacity-50 transition-colors"
+        <div className="flex items-center gap-2">
+          <Link
+            href="/calorie"
+            className="rounded-full bg-black/10 px-3 py-1 text-xs font-medium text-[#3C1E1E] hover:bg-black/20 transition-colors"
           >
-            대화 초기화
-          </button>
-        )}
+            🍽️ 칼로리 계산
+          </Link>
+          {messages.length > 0 && (
+            <button
+              onClick={handleReset}
+              disabled={isStreaming}
+              className="rounded-full bg-black/10 px-3 py-1 text-xs font-medium text-[#3C1E1E] hover:bg-black/20 disabled:cursor-not-allowed disabled:opacity-50 transition-colors"
+            >
+              대화 초기화
+            </button>
+          )}
+        </div>
       </header>
 
       {/* 메시지 목록 */}
@@ -147,6 +158,12 @@ export default function ChatPage() {
                   </button>
                 ))}
               </div>
+              <Link
+                href="/calorie"
+                className="mt-3 flex w-full items-center justify-center gap-2 rounded-2xl bg-white px-3 py-2.5 text-xs font-semibold text-gray-700 shadow-sm hover:bg-[#FEE500] hover:text-[#3C1E1E] transition-colors border border-white hover:border-[#FEE500]"
+              >
+                🍽️ 음식 칼로리 직접 계산하기
+              </Link>
             </div>
           </div>
         )}
